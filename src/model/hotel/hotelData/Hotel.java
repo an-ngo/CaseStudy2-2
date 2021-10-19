@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Hotel implements IHotel{
     String name;
     double rate;
-    ArrayList<Room> roomArrayList;
+    ArrayList<Room> roomArrayList = new ArrayList<>();
 
     public Hotel() {
         roomArrayList = new ArrayList<>();

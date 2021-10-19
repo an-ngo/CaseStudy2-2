@@ -2,10 +2,10 @@ package model.user.commandUser;
 
 import model.user.user.User;
 
-public class DisplayUserInfo implements ICommandUser{
+public class DisplayUserInfoCommand implements ICommandUser{
     User user;
 
-    public DisplayUserInfo(User user) {
+    public DisplayUserInfoCommand(User user) {
         this.user = user;
     }
 

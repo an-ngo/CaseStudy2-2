@@ -4,7 +4,7 @@ import model.hotel.hotelData.Hotel;
 import model.room.roomData.Room;
 
 public class DisplayAllRoomCommand implements ICommandHotel{
-    Hotel hotel;
+    Hotel hotel = new Hotel();
     public DisplayAllRoomCommand(Hotel hotel){
         this.hotel = hotel;
     }

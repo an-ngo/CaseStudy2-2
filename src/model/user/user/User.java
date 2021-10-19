@@ -1,10 +1,20 @@
 package model.user.user;
 
+import model.bill.Bill;
+import model.room.roomData.Room;
+
+import java.util.ArrayList;
+
 public class User implements IUser{
-    String userName;
-    String password;
-    String name;
-    String age;
+    private Bill bill;
+    private String userName;
+    private String password;
+    private String name;
+    private String age;
+    private ArrayList<Room> roomArrayList= new ArrayList<>();
+
+    public User() {
+    }
 
     public User(String userName, String password) {
         this.userName = userName;
@@ -16,6 +26,20 @@ public class User implements IUser{
         this.password = password;
         this.name = name;
         this.age = age;
+    }
+
+    public Bill getBill() {
+        if(bill!=null){
+        return bill;
+
+        }else {
+            System.err.println("NULL Bill");
+            return null;
+        }
+    }
+
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 
     public String getUserName() {
@@ -50,6 +74,14 @@ public class User implements IUser{
         this.age = age;
     }
 
+    public ArrayList<Room> getRoomArrayList() {
+        return roomArrayList;
+    }
+
+    public void setRoomArrayList(ArrayList<Room> roomArrayList) {
+        this.roomArrayList = roomArrayList;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -64,5 +96,13 @@ public class User implements IUser{
         System.out.println("--------------------");
         System.out.println(toString());
         System.out.println("--------------------");
+    }
+
+    @Override
+    public void displayAllUserRoom() {
+        for (Room room :
+                this.getBill().getRoomArrayList()) {
+
+        }
     }
 }

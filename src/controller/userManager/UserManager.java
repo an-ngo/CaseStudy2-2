@@ -1,11 +1,14 @@
 package controller.userManager;
 
+import model.user.commandUser.ICommandUser;
 import model.user.user.User;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserManager implements IUserManager{
+    ICommandUser commandUser;
+    private static UserManager userManager;
     private ArrayList<User> userArrayList;
 
     public UserManager() {
@@ -24,6 +27,22 @@ public class UserManager implements IUserManager{
         this.userArrayList = userArrayList;
     }
 
+    public void setCommandUser(ICommandUser commandUser) {
+        this.commandUser = commandUser;
+    }
+
+
+    public void doCommand(){
+        commandUser.execute();
+    }
+
+    public static UserManager getInstance(){
+        if(userManager==null){
+            userManager=new UserManager();
+        }
+        return userManager;
+    }
+
     @Override
     public String toString() {
         return "UserManager{" +
@@ -37,33 +56,22 @@ public class UserManager implements IUserManager{
              userArrayList) {
             if(user.getUserName().equals(username)&&
                user.getPassword().equals(password)){
-                System.out.println("--------------------");
-                System.out.println("Login success");
-                System.out.println("--------------------");
                 return user;
             }
         }
-        System.out.println("Wrong username or password");
         return null;
     }
 
     @Override
-    public User register() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Input ur username");
-        String username = scanner.nextLine();
-        System.out.println("Input ur password");
-        String password = scanner.nextLine();
-        System.out.println("Input ur name");
-        String name = scanner.nextLine();
-        System.out.println("Input ur age");
-        String age = scanner.nextLine();
+    public User register(String username, String password, String name,String age) {
+
         if(Integer.parseInt(age)<18){
             System.err.println("Not enough age for you");
             return null;
         }
         else {
             User user = new User(username, password, name, age);
+            userArrayList.add(user);
             return user;
         }
     }

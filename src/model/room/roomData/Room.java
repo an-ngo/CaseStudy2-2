@@ -2,11 +2,16 @@ package model.room.roomData;
 
 public class Room implements IRoom{
     int serial;
+    private boolean ready;
     EnumRoomType type ;
+
+    public Room() {
+    }
 
     public Room(int serial, EnumRoomType type) {
         this.serial = serial;
         this.type = type;
+        ready = true;
     }
 
     public Room(EnumRoomType type) {
@@ -27,6 +32,14 @@ public class Room implements IRoom{
 
     public void setType(EnumRoomType type) {
         this.type = type;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     @Override
