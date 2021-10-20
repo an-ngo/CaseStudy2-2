@@ -2,9 +2,10 @@ package model.hotel.hotelData;
 
 import model.room.roomData.Room;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Hotel implements IHotel{
+public class Hotel implements IHotel, Serializable {
     String name;
     double rate;
     ArrayList<Room> roomArrayList = new ArrayList<>();

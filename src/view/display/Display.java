@@ -3,63 +3,34 @@ import controller.billManager.BillManager;
 import controller.commandControllerMenu.CommandMenu;
 import controller.hotelManager.HotelManager;
 import controller.userManager.UserManager;
-import model.hotel.commandHotel.AddNewRoomCommand;
-import model.hotel.commandHotel.DisplayAllRoomCommand;
-import model.hotel.commandHotel.DisplayHotelInfoCommand;
-import model.hotel.commandHotel.ICommandHotel;
 import model.hotel.hotelData.Hotel;
 import model.room.roomData.Room;
-import model.user.commandUser.DisplayAllUserRoomCommand;
-import model.user.commandUser.DisplayUserInfoCommand;
-import model.user.commandUser.ICommandUser;
 import model.user.user.User;
-
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class Display {
         public HotelManager hotelManager = HotelManager.getInstance();
         public UserManager userManager = UserManager.getInstance();
         public BillManager billManager = BillManager.getInstance();
-        public Display display;
+        //public Display display;
         public Hotel hotel = hotelManager.getHotel();
         public User user = new User();
         CommandMenu commandMenu = new CommandMenu(this);
-        private final String regexString = "^[A-Za-z0-9]{4,8}$";
 
-        ICommandHotel addNewRoomCommand = new AddNewRoomCommand(this.hotel);
-        ICommandHotel displayAllRoomCommand = new DisplayAllRoomCommand(this.hotel);
-        ICommandHotel displayHotelInfoCommand = new DisplayHotelInfoCommand(this.hotel);
 
-        ICommandUser displayAllUserRoomCommand = new DisplayAllUserRoomCommand(this.user);
-        ICommandUser displayUserInfoCommand = new DisplayUserInfoCommand(this.user);
 
         public Display(HotelManager hotelManager) {
                 this.hotelManager = hotelManager;
                 this.hotel = hotelManager.getHotel();
         }
 
-        public void displayHotelInfo(Hotel hotel) {
-                System.out.println("--------------------------");
-                System.out.println(hotel.toString());
-                System.out.println("--------------------------");
-
-        }
-
-
-
-        public void displayRoomInfo(int index) {
-                String roomInfo = hotelManager.getRoomArrayList().get(index).toString();
-                System.out.println(roomInfo);
-        }
-
-
-
-        public void displayAllRoom() {
-                hotelManager.setCommandHotel(displayAllRoomCommand);
-                hotelManager.doCommand();
-
+        public Display(HotelManager hotelManager, UserManager userManager, BillManager billManager) {
+                this.hotelManager = hotelManager;
+                this.userManager = userManager;
+                this.billManager = billManager;
         }
 
         public void loginFunction() {
@@ -76,7 +47,6 @@ public class Display {
 
                 }
                 else System.out.println("Success Login");
-                this.displayMenu();
         }
 
         public void registerFunction() {
@@ -90,6 +60,8 @@ public class Display {
                 String name = scanner.nextLine();
                 System.out.println("Input age");
                 String age = scanner.nextLine();
+                //improve here...............................................
+                String regexString = "^[A-Za-z0-9]{4,8}$";
                 Pattern pattern = Pattern.compile(regexString);
                 Matcher matcher = pattern.matcher(userName);
                 if(!matcher.matches()){
@@ -104,7 +76,6 @@ public class Display {
 
                         commandMenu.displayUserInfoCommand(this.user);
 
-                        this.displaySecondMenu();
                 }
 
         }
@@ -119,13 +90,15 @@ public class Display {
                 switch (input){
                         case 1:
                                 this.loginFunction();
+                                displaySecondMenu();
                                 break;
                         case 2:
                                 this.registerFunction();
+                                displaySecondMenu();
                                 break;
                         case 3:
-
-                                System.exit(0);
+                                System.out.println("Logout.......");
+                                break;
                         default:
                                 System.out.println("Wrong input");
                                 displayMenu();
@@ -138,82 +111,75 @@ public class Display {
                 System.out.println("2: view Hotel info");
                 System.out.println("3: Show all your room in this hotel");
                 System.out.println("4: Book Room");
-                System.out.println("5: Show ur information");
-                System.out.println("6: Back to previous");
+                System.out.println("5: Check out Room / return Room");
+                System.out.println("6: Show ur information");
+                System.out.println("7: Back to previous");
 
                 Scanner scanner = new Scanner(System.in);
                 int input = scanner.nextInt();
                 switch (input){
                         case 1:
-//                                hotelManager.setCommandHotel(displayAllRoomCommand);
-//                                hotelManager.doCommand();
-//                                displaySecondMenu();
                                 commandMenu.displayAllRoomCommand(this.hotel);
+                                displaySecondMenu();
+                                break;
                         case 2:
-//                                hotelManager.setCommandHotel(displayHotelInfoCommand);
-//                                hotelManager.doCommand();
                                 commandMenu.displayHotelInfoCommand(this.hotel);
                                 displaySecondMenu();
+                                break;
                         case 3:
-//                                userManager.setCommandUser(displayAllUserRoomCommand);
-//                                userManager.doCommand();
                                 commandMenu.displayAllUserRoomCommand(this.user);
                                 displaySecondMenu();
+                                break;
                         case 4:
-                                System.out.println("Input Room's index");
+                                System.out.println("-----------------------------------");
+                                commandMenu.displayAllRoomCommand(this.hotel);
+                                System.out.println("Input Room's serial to book");
                                 Scanner scanner2 = new Scanner(System.in);
-                                try{
-                                        int index = scanner2.nextInt();
-                                        Room room = hotelManager.getRoomArrayList().get(index);
+                                int serial = scanner2.nextInt();
+                                Room room = hotelManager.getRoomBySerial(serial);
+                                if(room != null){
+                                        room.setReady(false);
                                         billManager.addBill(user,room);
-                                }catch (Exception e){
-                                        System.out.println("wrong input");
-                                }finally {
-                                        displaySecondMenu();
+                                        user.getRoomArrayList().add(room);
+                                }else{
+                                        System.out.println("Input wrong serial");
                                 }
-                        case 5:
-//                                ICommandUser displayUserInfoCommand = new DisplayUserInfoCommand(this.user);
-//                                userManager.setCommandUser(displayUserInfoCommand);
-//                                userManager.doCommand();
-                                commandMenu.displayUserInfoCommand(this.user);
+                                System.out.println("-----------------------------------");
                                 displaySecondMenu();
+                                break;
+                        case 5:
+                                System.out.println("-----------------------------------");
+                                commandMenu.displayAllUserRoomCommand(this.user);
+                                System.out.println("Input Room's serial to remove");
+                                Scanner scanner1 = new Scanner(System.in);
+                                int serial2 = scanner1.nextInt();
+                                Room room2 = hotelManager.getRoomBySerial(serial2);
+                                if(room2!=null){
+                                        room2.setReady(true);
+                                        user.getRoomArrayList().remove(room2);
+                                }else{
+                                        System.out.println("Input wrong serial");
+                                        System.out.println("-----------------------------------");
+                                }
+                                displaySecondMenu();
+                                break;
 
                         case 6:
+                                System.out.println("-----------------------------------");
+                                commandMenu.displayUserInfoCommand(this.user);
+                                displaySecondMenu();
+                                break;
+
+                        case 7:
+                                System.out.println("-----------------------------------");
+                                System.out.println("Back to 1st menu");
                                 displayMenu();
+                                break;
                         default:
+                                System.out.println("-----------------------------------");
                                 System.out.println("Wrong input");
                                 displaySecondMenu();
                 }
         }
-
-//        public void displayThirdMenu() {
-//                System.out.println("Input your choice");
-//                System.out.println("1: show all room info");
-//                System.out.println("4: Back to previous Menu");
-//
-//                Scanner scanner = new Scanner(System.in);
-//                int input = scanner.nextInt();
-//                switch (input){
-//                        case 1:
-//                                hotel.showAllRoom();
-//                                displayThirdMenu();
-//                        case 2:
-//                                System.out.println("Input index of room u want");
-//                                int index = scanner.nextInt();
-//                                user.addBookedRoomToUser(hotel.getRoomList().get(index));
-//                                System.out.println("success book room");
-//                                displayThirdMenu();
-//                        case 3:
-//                                user.showALlRoomOfUser();
-//                                displayThirdMenu();
-//                        case 4:
-//                                displaySecondMenu();
-//                        default:
-//                                System.out.println("Wrong input");
-//                                displayThirdMenu();
-//
-//                }
-//        }
-
 
 }

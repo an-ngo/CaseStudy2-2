@@ -11,6 +11,6 @@ public class DisplayAllUserRoomCommand implements ICommandUser{
 
     @Override
     public void execute() {
-
+        user.displayAllUserRoom();
     }
 }

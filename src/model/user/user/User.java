@@ -3,9 +3,10 @@ package model.user.user;
 import model.bill.Bill;
 import model.room.roomData.Room;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class User implements IUser{
+public class User implements IUser, Serializable {
     private Bill bill;
     private String userName;
     private String password;
@@ -82,6 +83,10 @@ public class User implements IUser{
         this.roomArrayList = roomArrayList;
     }
 
+
+
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -100,9 +105,11 @@ public class User implements IUser{
 
     @Override
     public void displayAllUserRoom() {
-        for (Room room :
-                this.getBill().getRoomArrayList()) {
-
-        }
+        if(roomArrayList.size()>0){
+            for (Room room :
+                    this.roomArrayList) {
+                System.out.println(room.toString());
+            }
+        }else System.out.println("U have booked no room");
     }
 }

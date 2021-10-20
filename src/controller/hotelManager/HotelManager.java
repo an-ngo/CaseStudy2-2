@@ -15,6 +15,10 @@ public class HotelManager implements IHotelManager{
     public HotelManager() {
         roomArrayList = new ArrayList<>();
     }
+    public HotelManager(Hotel hotel){
+        this.roomArrayList = hotel.getRoomArrayList();
+        this.hotel = hotel;
+    }
 
     public HotelManager(ICommandHotel commandHotel) {
         this.commandHotel = commandHotel;
@@ -22,7 +26,6 @@ public class HotelManager implements IHotelManager{
 
     public HotelManager(ICommandHotel commandHotel, HotelManager hotelManager, Hotel hotel, ArrayList<Room> roomArrayList) {
         this.commandHotel = commandHotel;
-        this.hotelManager = hotelManager;
         this.hotel = hotel;
         this.roomArrayList = roomArrayList;
     }
@@ -79,6 +82,16 @@ public class HotelManager implements IHotelManager{
     @Override
     public void removeRoom(int index) {
         roomArrayList.remove(index);
+    }
+
+    public Room getRoomBySerial(int serial){
+        for (Room room :
+                roomArrayList) {
+            if (room.getSerial() == serial) {
+                return room;
+            }
+        }
+        return null;
     }
 
 }

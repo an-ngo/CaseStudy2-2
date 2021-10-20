@@ -4,7 +4,6 @@ import model.user.commandUser.ICommandUser;
 import model.user.user.User;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class UserManager implements IUserManager{
     ICommandUser commandUser;

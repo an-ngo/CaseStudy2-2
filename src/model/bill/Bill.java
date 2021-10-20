@@ -3,9 +3,10 @@ package model.bill;
 import model.room.roomData.Room;
 import model.user.user.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Bill implements IBill {
+public class Bill implements IBill, Serializable {
     private User user ;
     private ArrayList<Room> roomArrayList = new ArrayList<>();
     private Bill bill;
@@ -16,7 +17,7 @@ public class Bill implements IBill {
     }
 
     public Bill(User user) {
-        this.bill = new Bill(this.user,this.roomArrayList);
+        this.bill = new Bill(user,this.roomArrayList);
         this.user = user;
         roomArrayList = new ArrayList<>();
         user.setBill(this.bill);

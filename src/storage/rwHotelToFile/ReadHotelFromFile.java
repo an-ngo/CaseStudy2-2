@@ -5,7 +5,7 @@ import model.hotel.hotelData.Hotel;
 import java.io.*;
 
 public class ReadHotelFromFile {
-    private final String path = "hotel.txt";
+    private static final String path = "hotel.txt";
     private ReadHotelFromFile readHotelFromFile;
 
     public ReadHotelFromFile getInstance(){
@@ -19,13 +19,22 @@ public class ReadHotelFromFile {
         File file = new File(path);
         if(!file.exists()){
             file.createNewFile();
+            System.out.println("Create new HotelFile");
+            return null;
         }
-        InputStream is = new FileInputStream(file);
-        ObjectInputStream ois = new ObjectInputStream(is);
-        Hotel hotel = (Hotel) ois.readObject();
-        ois.close();
-        is.close();
-        return hotel;
+        else{
+            if(file.canRead()){
+                InputStream is = new FileInputStream(file);
+                ObjectInputStream ois = new ObjectInputStream(is);
+                Hotel hotel = (Hotel) ois.readObject();
+                ois.close();
+                is.close();
+                return hotel;
+            }else {
+                System.err.println("fileHotel null");
+                return new Hotel();
+            }
+        }
     }
 
 

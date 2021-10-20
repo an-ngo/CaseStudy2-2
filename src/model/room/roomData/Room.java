@@ -1,8 +1,10 @@
 package model.room.roomData;
 
-public class Room implements IRoom{
+import java.io.Serializable;
+
+public class Room implements IRoom, Serializable {
     int serial;
-    private boolean ready;
+    private boolean ready = true;
     EnumRoomType type ;
 
     public Room() {

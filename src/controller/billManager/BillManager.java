@@ -21,6 +21,14 @@ public class BillManager implements IBillManager{
         return billManager;
     }
 
+    public ArrayList<Bill> getBillArrayList() {
+        return billArrayList;
+    }
+
+    public void setBillArrayList(ArrayList<Bill> billArrayList) {
+        this.billArrayList = billArrayList;
+    }
+
     @Override
     public void addBill(Bill bill) {
         billArrayList.add(bill);
