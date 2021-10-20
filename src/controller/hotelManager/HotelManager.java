@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class HotelManager implements IHotelManager{
     private ICommandHotel commandHotel;
     private static HotelManager hotelManager;
-    private Hotel hotel;
+    private Hotel hotel = new Hotel();
     private ArrayList<Room> roomArrayList = new ArrayList<>();
 
     public HotelManager() {
@@ -45,6 +45,26 @@ public class HotelManager implements IHotelManager{
         this.roomArrayList = roomArrayList;
     }
 
+    public ICommandHotel getCommandHotel() {
+        return commandHotel;
+    }
+
+    public static HotelManager getHotelManager() {
+        return hotelManager;
+    }
+
+    public static void setHotelManager(HotelManager hotelManager) {
+        HotelManager.hotelManager = hotelManager;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
     @Override
     public void doCommand() {
         commandHotel.execute();
@@ -53,6 +73,7 @@ public class HotelManager implements IHotelManager{
     @Override
     public void addRoom(Room room) {
         roomArrayList.add(room);
+        hotel.setRoomArrayList(roomArrayList);
     }
 
     @Override

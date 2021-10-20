@@ -1,5 +1,6 @@
 package view.display;
 import controller.billManager.BillManager;
+import controller.commandControllerMenu.CommandMenu;
 import controller.hotelManager.HotelManager;
 import controller.userManager.UserManager;
 import model.hotel.commandHotel.AddNewRoomCommand;
@@ -14,23 +15,30 @@ import model.user.commandUser.ICommandUser;
 import model.user.user.User;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Display {
         public HotelManager hotelManager = HotelManager.getInstance();
         public UserManager userManager = UserManager.getInstance();
         public BillManager billManager = BillManager.getInstance();
         public Display display;
-        public Hotel hotel;
-        public User user;
+        public Hotel hotel = hotelManager.getHotel();
+        public User user = new User();
+        CommandMenu commandMenu = new CommandMenu(this);
+        private final String regexString = "^[A-Za-z0-9]{4,8}$";
 
-        ICommandHotel addNewRoomCommand = new AddNewRoomCommand(hotel);
-        ICommandHotel displayAllRoomCommand = new DisplayAllRoomCommand(hotel);
-        ICommandHotel displayHotelInfoCommand = new DisplayHotelInfoCommand(hotel);
+        ICommandHotel addNewRoomCommand = new AddNewRoomCommand(this.hotel);
+        ICommandHotel displayAllRoomCommand = new DisplayAllRoomCommand(this.hotel);
+        ICommandHotel displayHotelInfoCommand = new DisplayHotelInfoCommand(this.hotel);
 
-        ICommandUser displayAllUserRoomCommand = new DisplayAllUserRoomCommand(user);
-        ICommandUser displayUserInfoCommand = new DisplayUserInfoCommand(user);
+        ICommandUser displayAllUserRoomCommand = new DisplayAllUserRoomCommand(this.user);
+        ICommandUser displayUserInfoCommand = new DisplayUserInfoCommand(this.user);
 
-
+        public Display(HotelManager hotelManager) {
+                this.hotelManager = hotelManager;
+                this.hotel = hotelManager.getHotel();
+        }
 
         public void displayHotelInfo(Hotel hotel) {
                 System.out.println("--------------------------");
@@ -61,8 +69,9 @@ public class Display {
                 String userName = scanner.nextLine();
                 System.out.println("Password");
                 String password = scanner.nextLine();
-                user = userManager.login(userName,password);
-                if(user==null){
+
+                this.user = userManager.login(userName,password);
+                if(this.user==null){
                 System.out.println("Wrong username or password");
 
                 }
@@ -81,12 +90,23 @@ public class Display {
                 String name = scanner.nextLine();
                 System.out.println("Input age");
                 String age = scanner.nextLine();
-                user = userManager.register(userName, password,name , age);
-                if(user==null){
-                        System.out.println("u must have more than 18 to register this LoveHotel");
+                Pattern pattern = Pattern.compile(regexString);
+                Matcher matcher = pattern.matcher(userName);
+                if(!matcher.matches()){
+                        System.out.println("UserName must have 4 - 8 character with no special item");
                         displayMenu();
-                }else System.out.println("Register success");
-                this.displaySecondMenu();
+                }else{
+                        this.user = userManager.register(userName, password,name , age);
+                        if(this.user==null){
+                                System.out.println("u must have more than 18 to register this LoveHotel");
+                                displayMenu();
+                        }else System.out.println("Register success");
+
+                        commandMenu.displayUserInfoCommand(this.user);
+
+                        this.displaySecondMenu();
+                }
+
         }
 
         public void displayMenu() {
@@ -104,6 +124,7 @@ public class Display {
                                 this.registerFunction();
                                 break;
                         case 3:
+
                                 System.exit(0);
                         default:
                                 System.out.println("Wrong input");
@@ -124,16 +145,19 @@ public class Display {
                 int input = scanner.nextInt();
                 switch (input){
                         case 1:
-                                hotelManager.setCommandHotel(displayAllRoomCommand);
-                                hotelManager.doCommand();
-                                displaySecondMenu();
+//                                hotelManager.setCommandHotel(displayAllRoomCommand);
+//                                hotelManager.doCommand();
+//                                displaySecondMenu();
+                                commandMenu.displayAllRoomCommand(this.hotel);
                         case 2:
-                                hotelManager.setCommandHotel(displayHotelInfoCommand);
-                                hotelManager.doCommand();
+//                                hotelManager.setCommandHotel(displayHotelInfoCommand);
+//                                hotelManager.doCommand();
+                                commandMenu.displayHotelInfoCommand(this.hotel);
                                 displaySecondMenu();
                         case 3:
-                                userManager.setCommandUser(displayAllUserRoomCommand);
-                                userManager.doCommand();
+//                                userManager.setCommandUser(displayAllUserRoomCommand);
+//                                userManager.doCommand();
+                                commandMenu.displayAllUserRoomCommand(this.user);
                                 displaySecondMenu();
                         case 4:
                                 System.out.println("Input Room's index");
@@ -144,11 +168,14 @@ public class Display {
                                         billManager.addBill(user,room);
                                 }catch (Exception e){
                                         System.out.println("wrong input");
+                                }finally {
                                         displaySecondMenu();
                                 }
                         case 5:
-                                userManager.setCommandUser(displayUserInfoCommand);
-                                userManager.doCommand();
+//                                ICommandUser displayUserInfoCommand = new DisplayUserInfoCommand(this.user);
+//                                userManager.setCommandUser(displayUserInfoCommand);
+//                                userManager.doCommand();
+                                commandMenu.displayUserInfoCommand(this.user);
                                 displaySecondMenu();
 
                         case 6:

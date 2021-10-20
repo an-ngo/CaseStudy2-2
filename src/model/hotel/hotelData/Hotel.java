@@ -26,6 +26,33 @@ public class Hotel implements IHotel{
         this.roomArrayList = roomArrayList;
     }
 
+    //GET SET
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public ArrayList<Room> getRoomArrayList() {
+        return roomArrayList;
+    }
+
+    public void setRoomArrayList(ArrayList<Room> roomArrayList) {
+        this.roomArrayList = roomArrayList;
+    }
+
     @Override
     public void addNewRoom(Room room) {
         roomArrayList.add(room);
@@ -43,7 +70,15 @@ public class Hotel implements IHotel{
     @Override
     public void displayHotelInfo() {
         System.out.println("-------------------");
-        System.out.println(toString());
+        System.out.println(this.toString());
         System.out.println("-------------------");
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "name='" + name + '\'' +
+                ", rate=" + rate +
+                '}';
     }
 }

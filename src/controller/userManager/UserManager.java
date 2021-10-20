@@ -10,6 +10,7 @@ public class UserManager implements IUserManager{
     ICommandUser commandUser;
     private static UserManager userManager;
     private ArrayList<User> userArrayList;
+    private final String regexString = "^[A-Za-z0-9]{4,8}$";
 
     public UserManager() {
         userArrayList = new ArrayList<>();
@@ -52,6 +53,7 @@ public class UserManager implements IUserManager{
 
     @Override
     public User login(String username, String password) {
+
         for (User user:
              userArrayList) {
             if(user.getUserName().equals(username)&&
