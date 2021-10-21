@@ -3,10 +3,12 @@ import controller.billManager.BillManager;
 import controller.commandControllerMenu.CommandControllerMenu;
 import controller.hotelManager.HotelManager;
 import controller.userManager.UserManager;
+import model.bill.Bill;
 import model.hotel.hotelData.Hotel;
 import model.room.roomData.Room;
 import model.user.user.User;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +39,7 @@ public class Display {
                 System.out.println("Input your choice");
                 System.out.println("1: Login");
                 System.out.println("2: Register");
-                System.out.println("3: Quit");
+                System.out.println("0: Quit");
 //                Menu1.displayMenu1();
                 Scanner scanner = new Scanner(System.in);
                 int input = scanner.nextInt();
@@ -50,7 +52,7 @@ public class Display {
                                 this.registerFunction();
                                 secondMenu();
                                 break;
-                        case 3:
+                        case 0:
                                 System.out.println("Logout.......");
                                 break;
                         default:
@@ -69,7 +71,8 @@ public class Display {
                 System.out.println("4: Book Room");
                 System.out.println("5: Check out Room / return Room");
                 System.out.println("6: Show ur information");
-                System.out.println("7: Back to previous");
+                System.out.println("7: Show all your Bill");
+                System.out.println("0: Back to previous");
 //                Menu2.displayMenu2();
                 Scanner scanner = new Scanner(System.in);
                 int input = scanner.nextInt();
@@ -88,12 +91,12 @@ public class Display {
                                 break;
                         case 4:
                                 commandControllerMenu.displayAllRoomCommand(this.hotel);
-                                displayAndBookRoomByUser();
+                                chooseAndBookRoomByUser();
                                 secondMenu();
                                 break;
                         case 5:
                                 commandControllerMenu.displayAllUserRoomCommand(this.user);
-                                displayAndCheckoutRoomByUser();
+                                ChooseAndCheckoutRoomByUser();
                                 secondMenu();
                                 break;
 
@@ -101,8 +104,18 @@ public class Display {
                                 commandControllerMenu.displayUserInfoCommand(this.user);
                                 secondMenu();
                                 break;
-
                         case 7:
+                                ArrayList<Bill> billOfUser = billManager.getAllBillOfUser(user);
+                                if(billOfUser!=null){
+                                        System.out.println("All bill: ");
+                                        for (Bill bill :
+                                                billOfUser) {
+                                                System.out.println(bill);
+                                        }
+                                }else System.out.println("U have no Bill in this Hotel");
+                                secondMenu();
+                                break;
+                        case 0:
                                 System.out.println("Back to 1st menu.....");
                                 firstMenu();
                                 break;
@@ -112,28 +125,36 @@ public class Display {
                 }
         }
 
-        private void displayAndCheckoutRoomByUser() {
+        private void ChooseAndCheckoutRoomByUser() {
                 System.out.println("Input Room's serial to remove");
                 Scanner scanner1 = new Scanner(System.in);
                 int serial2 = scanner1.nextInt();
                 Room room2 = hotelManager.getRoomBySerial(serial2);
                 if(room2!=null){
                         room2.setReady(true);
-                        user.getRoomArrayList().remove(room2);
+                        Bill bill = billManager.setCheckoutTimeToBill(user,room2);
+                        user.checkoutRoomByUser(room2);
+                        System.out.println("Your bill is : "+bill.getMoney());
                 }else{
                         System.out.println("Input wrong serial");
                 }
         }
 
-        private void displayAndBookRoomByUser() {
+        private void chooseAndBookRoomByUser() {
+                System.out.println("0: Back to previous");
                 System.out.println("Input Room's serial to book");
                 Scanner scanner2 = new Scanner(System.in);
                 int serial = scanner2.nextInt();
+                if(serial==0){return;}
                 Room room = hotelManager.getRoomBySerial(serial);
-                if(room != null){
-                        room.setReady(false);
-                        billManager.addBill(user,room);
-                        user.getRoomArrayList().add(room);
+                if(room!=null){
+                        if(room.isReady()){
+                                room.setReady(false);
+                                Bill bill = new Bill(user,room);
+                                billManager.addBill(bill);
+                                user.bookRoomByUser(room);
+                                System.out.println("Book successfully");
+                        }else System.out.println("Room is not Ready");
                 }else{
                         System.out.println("Input wrong serial");
                 }
@@ -167,16 +188,16 @@ public class Display {
                 System.out.println("Input age");
                 String age = scanner.nextLine();
                 //improve here...............................................
-                String regexString = "^[A-Za-z0-9]{4,8}$";
+                String regexString = "^[A-Za-z0-9]{4,12}$";
                 Pattern pattern = Pattern.compile(regexString);
                 Matcher matcher = pattern.matcher(userName);
                 if(!matcher.matches()){
-                        System.out.println("UserName must have 4 - 8 character with no special item");
+                        System.out.println("UserName must have 4 - 12 character with no special item");
                         firstMenu();
                 }else{
                         user = userManager.register(userName, password,name , age);
                         if(user==null){
-                                System.out.println("u must have more than 18 to register this LoveHotel");
+                                System.out.println("Same username with another account");
                                 firstMenu();
                         }else System.out.println("Register success");
 

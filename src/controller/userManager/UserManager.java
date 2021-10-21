@@ -68,15 +68,14 @@ public class UserManager implements IUserManager{
 
     @Override
     public User register(String username, String password, String name,String age) {
-
-        if(Integer.parseInt(age)<18){
-            System.err.println("Not enough age for you");
-            return null;
+        for (User user :
+                userArrayList) {
+            if (user.getUserName().equals(username)) {
+                return null;
+            }
         }
-        else {
-            User user = new User(username, password, name, age);
-            userArrayList.add(user);
-            return user;
-        }
+        User user = new User(username, password, name, age);
+        userArrayList.add(user);
+        return user;
     }
 }

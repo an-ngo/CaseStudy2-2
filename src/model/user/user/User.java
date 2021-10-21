@@ -98,9 +98,7 @@ public class User implements IUser, Serializable {
 
     @Override
     public void displayUserInfo() {
-        System.out.println("--------------------");
         System.out.println(toString());
-        System.out.println("--------------------");
     }
 
     @Override
@@ -111,5 +109,12 @@ public class User implements IUser, Serializable {
                 System.out.println(room.toString());
             }
         }else System.out.println("U have booked no room");
+    }
+
+    public void bookRoomByUser(Room room){
+        roomArrayList.add(room) ;
+    }
+    public void checkoutRoomByUser(Room room){
+        roomArrayList.remove(room);
     }
 }

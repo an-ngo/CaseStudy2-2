@@ -1,12 +1,15 @@
 package model.room.roomData;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Room implements IRoom, Serializable {
     int serial;
     private boolean ready = true;
     EnumRoomType type ;
     private int price;
+    private LocalDate startBook;
+    private LocalDate endBook;
 
     public Room() {
     }
@@ -27,6 +30,22 @@ public class Room implements IRoom, Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public LocalDate getStartBook() {
+        return startBook;
+    }
+
+    public void setStartBook(LocalDate startBook) {
+        this.startBook = startBook;
+    }
+
+    public LocalDate getEndBook() {
+        return endBook;
+    }
+
+    public void setEndBook(LocalDate endBook) {
+        this.endBook = endBook;
     }
 
     public int getSerial() {
@@ -57,14 +76,14 @@ public class Room implements IRoom, Serializable {
     public String toString() {
         return "Room{" +
                 "serial=" + serial +
+                ", ready=" + ready +
                 ", type=" + type +
+                ", price=" + price +
                 '}';
     }
 
     @Override
     public void displayRoomInfo() {
-        System.out.println("-------------------");
         System.out.println(toString());
-        System.out.println("-------------------");
     }
 }

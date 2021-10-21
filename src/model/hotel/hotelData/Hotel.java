@@ -61,18 +61,14 @@ public class Hotel implements IHotel, Serializable {
 
     @Override
     public void displayAllRoom() {
-        System.out.println("-------------------");
         for (int i = 0; i < roomArrayList.size(); i++) {
             System.out.println(roomArrayList.get(i).toString());
         }
-        System.out.println("-------------------");
     }
 
     @Override
     public void displayHotelInfo() {
-        System.out.println("-------------------");
         System.out.println(this.toString());
-        System.out.println("-------------------");
     }
 
     @Override
