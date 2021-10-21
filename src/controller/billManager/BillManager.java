@@ -10,6 +10,8 @@ public class BillManager implements IBillManager{
     private static BillManager billManager;
     ArrayList<Bill> billArrayList;
 
+
+
     public BillManager(BillManager billManager) {
         this.billManager = billManager;
     }
@@ -35,7 +37,7 @@ public class BillManager implements IBillManager{
     }
 
 
-    public BillManager() {
+    private BillManager() {
         billArrayList = new ArrayList<>();
     }
 

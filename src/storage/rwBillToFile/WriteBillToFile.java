@@ -8,7 +8,18 @@ import java.io.*;
 
 public class WriteBillToFile {
     private static final String path = "bill.txt";
-    private static WriteBillToFile writeBillToFile;
+    private static WriteBillToFile instance;
+
+    private WriteBillToFile() {
+    }
+
+    public static WriteBillToFile getInstance(){
+        if(instance == null){
+            instance = new WriteBillToFile();
+        }
+        return  instance;
+    }
+
     public void setWriteBillToFile(BillManager billManager) throws IOException {
         File file = new File(path);
         if(!file.exists()){

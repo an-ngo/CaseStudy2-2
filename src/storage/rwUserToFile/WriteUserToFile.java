@@ -7,7 +7,17 @@ import java.io.*;
 
 public class WriteUserToFile implements IOUser {
     private static final String path = "user.txt";
-    private static WriteUserToFile writeUserToFile;
+    private static WriteUserToFile instance;
+
+    private WriteUserToFile() {
+    }
+    public static WriteUserToFile getInstance(){
+        if (instance == null) {
+            instance = new WriteUserToFile();
+        }
+        return instance;
+    }
+
     public void writeUserToFile(UserManager userManager) throws IOException {
         File file = new File(path);
         if(!file.exists()){

@@ -16,12 +16,12 @@ import model.user.user.User;
 import view.display.Display;
 
 public class CommandMenu {
-    private UserManager userManager;
-    private HotelManager hotelManager;
+    private UserManager userManager ;
+    private HotelManager hotelManager ;
 
-    public CommandMenu(Display display) {
-        this.userManager = display.userManager;
-        this.hotelManager = display.hotelManager;
+    public CommandMenu(UserManager userManager, HotelManager hotelManager) {
+        this.userManager = userManager;
+        this.hotelManager = hotelManager;
     }
 
     public void displayUserInfoCommand(User user){

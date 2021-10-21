@@ -19,24 +19,24 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        UserManager userManager = new UserManager();
-        HotelManager hotelManager = new HotelManager();
-        BillManager billManager = new BillManager();
+        UserManager userManager = UserManager.getInstance();
+        HotelManager hotelManager = HotelManager.getInstance();
+        BillManager billManager = BillManager.getInstance();
 
-        ReadHotelFromFile readHotelFromFile = new ReadHotelFromFile();
-        WriteHotelToFile writeHotelToFile = new WriteHotelToFile();
-        ReadUserFromFile readUserFromFile = new ReadUserFromFile();
-        WriteUserToFile writeUserToFile = new WriteUserToFile();
-        ReadBillFromFile readBillFromFile = new ReadBillFromFile();
-        WriteBillToFile writeBillToFile = new WriteBillToFile();
+        ReadHotelFromFile readHotelFromFile = ReadHotelFromFile.getInstance();
+        WriteHotelToFile writeHotelToFile = WriteHotelToFile.getInstance();
+        ReadUserFromFile readUserFromFile = ReadUserFromFile.getInstance();
+        WriteUserToFile writeUserToFile = WriteUserToFile.getInstance();
+        ReadBillFromFile readBillFromFile = ReadBillFromFile.getInstance();
+        WriteBillToFile writeBillToFile = WriteBillToFile.getInstance();
 
+        //Prepare before Display Menu
         try {
             ArrayList<User> userArrayList = readUserFromFile.readUserFromFile();
             ArrayList<Bill> billArrayList = readBillFromFile.readBillFromFile();
             Hotel hotel = readHotelFromFile.readHotelFromFile();
 
             if(hotel !=null) {
-                hotelManager = new HotelManager(hotel);
                 hotelManager.setHotel(hotel);
                 hotelManager.setRoomArrayList(hotel.getRoomArrayList());
             }else {

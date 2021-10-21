@@ -13,24 +13,21 @@ import java.util.regex.Pattern;
 
 public class Display {
         public HotelManager hotelManager = HotelManager.getInstance();
-        public UserManager userManager = UserManager.getInstance();
+        public UserManager userManager = UserManager.getInstance() ;
         public BillManager billManager = BillManager.getInstance();
         //public Display display;
-        public Hotel hotel = hotelManager.getHotel();
+        public Hotel hotel ;
         public User user = new User();
-        CommandMenu commandMenu = new CommandMenu(this);
+        CommandMenu commandMenu = new CommandMenu(userManager,hotelManager);
 
 
 
-        public Display(HotelManager hotelManager) {
-                this.hotelManager = hotelManager;
-                this.hotel = hotelManager.getHotel();
-        }
 
         public Display(HotelManager hotelManager, UserManager userManager, BillManager billManager) {
                 this.hotelManager = hotelManager;
                 this.userManager = userManager;
                 this.billManager = billManager;
+                this.hotel = hotelManager.getHotel();
         }
 
         public void loginFunction() {
@@ -119,15 +116,21 @@ public class Display {
                 int input = scanner.nextInt();
                 switch (input){
                         case 1:
+                                System.out.println("-----------------------------------");
                                 commandMenu.displayAllRoomCommand(this.hotel);
+                                System.out.println("-----------------------------------");
                                 displaySecondMenu();
                                 break;
                         case 2:
+                                System.out.println("-----------------------------------");
                                 commandMenu.displayHotelInfoCommand(this.hotel);
+                                System.out.println("-----------------------------------");
                                 displaySecondMenu();
                                 break;
                         case 3:
+                                System.out.println("-----------------------------------");
                                 commandMenu.displayAllUserRoomCommand(this.user);
+                                System.out.println("-----------------------------------");
                                 displaySecondMenu();
                                 break;
                         case 4:
@@ -159,14 +162,15 @@ public class Display {
                                         user.getRoomArrayList().remove(room2);
                                 }else{
                                         System.out.println("Input wrong serial");
-                                        System.out.println("-----------------------------------");
                                 }
+                                System.out.println("-----------------------------------");
                                 displaySecondMenu();
                                 break;
 
                         case 6:
                                 System.out.println("-----------------------------------");
                                 commandMenu.displayUserInfoCommand(this.user);
+                                System.out.println("-----------------------------------");
                                 displaySecondMenu();
                                 break;
 
@@ -178,6 +182,7 @@ public class Display {
                         default:
                                 System.out.println("-----------------------------------");
                                 System.out.println("Wrong input");
+                                System.out.println("-----------------------------------");
                                 displaySecondMenu();
                 }
         }

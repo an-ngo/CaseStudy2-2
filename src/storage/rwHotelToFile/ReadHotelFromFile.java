@@ -6,13 +6,16 @@ import java.io.*;
 
 public class ReadHotelFromFile {
     private static final String path = "hotel.txt";
-    private ReadHotelFromFile readHotelFromFile;
+    private static ReadHotelFromFile instance;
 
-    public ReadHotelFromFile getInstance(){
-        if(this.readHotelFromFile==null){
-            this.readHotelFromFile = new ReadHotelFromFile();
+    private ReadHotelFromFile() {
+    }
+
+    public static ReadHotelFromFile getInstance(){
+        if(instance ==null){
+            instance = new ReadHotelFromFile();
         }
-        return this.readHotelFromFile;
+        return instance;
     }
 
     public Hotel readHotelFromFile() throws IOException, ClassNotFoundException {

@@ -8,6 +8,17 @@ import java.util.ArrayList;
 
 public class ReadBillFromFile {
     private static final String path = "bill.txt";
+    private static ReadBillFromFile instance;
+
+    private ReadBillFromFile() {
+    }
+
+    public static ReadBillFromFile getInstance(){
+        if(instance == null){
+            instance = new ReadBillFromFile();
+        }
+        return instance;
+    }
 
     public ArrayList<Bill> readBillFromFile() throws IOException, ClassNotFoundException {
         File file = new File(path);

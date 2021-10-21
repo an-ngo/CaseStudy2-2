@@ -7,6 +7,17 @@ import java.util.ArrayList;
 
 public class ReadUserFromFile {
     private static final String path = "user.txt";
+    private static ReadUserFromFile instance;
+
+    private ReadUserFromFile() {
+    }
+
+    public static ReadUserFromFile getInstance(){
+        if (instance == null) {
+            instance = new ReadUserFromFile();
+        }
+        return instance;
+    }
 
     public ArrayList<User> readUserFromFile() throws IOException, ClassNotFoundException {
         File file = new File(path);

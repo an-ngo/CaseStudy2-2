@@ -6,13 +6,16 @@ import java.io.*;
 
 public class WriteHotelToFile {
     private final String path = "hotel.txt";
-    private static WriteHotelToFile writeHotelToFile;
+    private static WriteHotelToFile instance;
+
+    private WriteHotelToFile() {
+    }
 
     public static WriteHotelToFile getInstance(){
-        if(writeHotelToFile==null){
-            writeHotelToFile = new WriteHotelToFile();
+        if(instance==null){
+            instance = new WriteHotelToFile();
         }
-        return writeHotelToFile;
+        return instance;
     }
 
     public void writeHotelToFile(Hotel hotel) throws IOException {

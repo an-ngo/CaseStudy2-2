@@ -6,13 +6,22 @@ import model.user.user.User;
 import java.util.ArrayList;
 
 public class UserManager implements IUserManager{
-    ICommandUser commandUser;
-    private static UserManager userManager;
+    private static UserManager instance;
+    private ICommandUser commandUser;
     private ArrayList<User> userArrayList;
     private final String regexString = "^[A-Za-z0-9]{4,8}$";
 
-    public UserManager() {
+
+
+    private UserManager() {
         userArrayList = new ArrayList<>();
+    }
+
+    public static UserManager getInstance(){
+        if(instance ==null){
+            instance = new UserManager();
+        }
+        return instance;
     }
 
     public UserManager(ArrayList<User> userArrayList) {
@@ -36,12 +45,6 @@ public class UserManager implements IUserManager{
         commandUser.execute();
     }
 
-    public static UserManager getInstance(){
-        if(userManager==null){
-            userManager=new UserManager();
-        }
-        return userManager;
-    }
 
     @Override
     public String toString() {
