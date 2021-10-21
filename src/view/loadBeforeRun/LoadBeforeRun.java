@@ -7,7 +7,6 @@ import model.room.roomData.Room;
 import model.room.roomData.roomType.RoomBusiness;
 import model.room.roomData.roomType.RoomNormal;
 import model.room.roomData.roomType.*;
-import view.display.Display;
 
 public class LoadBeforeRun {
     public static HotelManager loadBeforeRun(){
@@ -24,6 +23,8 @@ public class LoadBeforeRun {
         hotelManager.addRoom(room4);
         hotelManager.addRoom(room5);
         hotelManager.addRoom(room6);
+        Hotel hotel = new Hotel("Binh An",3.5);
+        hotelManager.setHotel(hotel);
         return hotelManager;
     }
 }

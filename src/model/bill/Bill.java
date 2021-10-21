@@ -4,12 +4,14 @@ import model.room.roomData.Room;
 import model.user.user.User;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Bill implements IBill, Serializable {
     private User user ;
+    private LocalDate bookedTime;
+    private LocalDate checkoutTime;
     private ArrayList<Room> roomArrayList = new ArrayList<>();
-    private Bill bill;
 
     public Bill() {
         user = new User();
@@ -17,10 +19,10 @@ public class Bill implements IBill, Serializable {
     }
 
     public Bill(User user) {
-        this.bill = new Bill(user,this.roomArrayList);
+        Bill bill = new Bill(user, this.roomArrayList);
         this.user = user;
         roomArrayList = new ArrayList<>();
-        user.setBill(this.bill);
+        user.setBill(bill);
 
     }
 

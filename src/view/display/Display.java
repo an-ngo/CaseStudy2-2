@@ -31,52 +31,7 @@ public class Display {
                 this.hotel = hotelManager.getHotel();
         }
 
-        public void loginFunction() {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("Please login your account");
-                System.out.println("UserName");
-                String userName = scanner.nextLine();
-                System.out.println("Password");
-                String password = scanner.nextLine();
 
-                this.user = userManager.login(userName,password);
-                if(this.user==null){
-                System.out.println("Wrong username or password");
-
-                }
-                else System.out.println("Success Login");
-        }
-
-        public void registerFunction() {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("Please input your account");
-                System.out.println("Input UserName");
-                String userName = scanner.nextLine();
-                System.out.println("Input Password");
-                String password = scanner.nextLine();
-                System.out.println("Input name");
-                String name = scanner.nextLine();
-                System.out.println("Input age");
-                String age = scanner.nextLine();
-                //improve here...............................................
-                String regexString = "^[A-Za-z0-9]{4,8}$";
-                Pattern pattern = Pattern.compile(regexString);
-                Matcher matcher = pattern.matcher(userName);
-                if(!matcher.matches()){
-                        System.out.println("UserName must have 4 - 8 character with no special item");
-                        firstMenu();
-                }else{
-                        user = userManager.register(userName, password,name , age);
-                        if(user==null){
-                                System.out.println("u must have more than 18 to register this LoveHotel");
-                                firstMenu();
-                        }else System.out.println("Register success");
-
-                        commandControllerMenu.displayUserInfoCommand(this.user);
-
-                }
-
-        }
 
         public void firstMenu() {
                 System.out.println("Input your choice");
@@ -133,31 +88,12 @@ public class Display {
                                 break;
                         case 4:
                                 commandControllerMenu.displayAllRoomCommand(this.hotel);
-                                System.out.println("Input Room's serial to book");
-                                Scanner scanner2 = new Scanner(System.in);
-                                int serial = scanner2.nextInt();
-                                Room room = hotelManager.getRoomBySerial(serial);
-                                if(room != null){
-                                        room.setReady(false);
-                                        billManager.addBill(user,room);
-                                        user.getRoomArrayList().add(room);
-                                }else{
-                                        System.out.println("Input wrong serial");
-                                }
+                                displayAndBookRoomByUser();
                                 secondMenu();
                                 break;
                         case 5:
                                 commandControllerMenu.displayAllUserRoomCommand(this.user);
-                                System.out.println("Input Room's serial to remove");
-                                Scanner scanner1 = new Scanner(System.in);
-                                int serial2 = scanner1.nextInt();
-                                Room room2 = hotelManager.getRoomBySerial(serial2);
-                                if(room2!=null){
-                                        room2.setReady(true);
-                                        user.getRoomArrayList().remove(room2);
-                                }else{
-                                        System.out.println("Input wrong serial");
-                                }
+                                displayAndCheckoutRoomByUser();
                                 secondMenu();
                                 break;
 
@@ -176,4 +112,77 @@ public class Display {
                 }
         }
 
+        private void displayAndCheckoutRoomByUser() {
+                System.out.println("Input Room's serial to remove");
+                Scanner scanner1 = new Scanner(System.in);
+                int serial2 = scanner1.nextInt();
+                Room room2 = hotelManager.getRoomBySerial(serial2);
+                if(room2!=null){
+                        room2.setReady(true);
+                        user.getRoomArrayList().remove(room2);
+                }else{
+                        System.out.println("Input wrong serial");
+                }
+        }
+
+        private void displayAndBookRoomByUser() {
+                System.out.println("Input Room's serial to book");
+                Scanner scanner2 = new Scanner(System.in);
+                int serial = scanner2.nextInt();
+                Room room = hotelManager.getRoomBySerial(serial);
+                if(room != null){
+                        room.setReady(false);
+                        billManager.addBill(user,room);
+                        user.getRoomArrayList().add(room);
+                }else{
+                        System.out.println("Input wrong serial");
+                }
+        }
+
+        public void loginFunction() {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Please login your account");
+                System.out.println("UserName");
+                String userName = scanner.nextLine();
+                System.out.println("Password");
+                String password = scanner.nextLine();
+
+                this.user = userManager.login(userName,password);
+                if(this.user==null){
+                        System.out.println("Wrong username or password");
+
+                }
+                else System.out.println("Success Login");
+        }
+
+        public void registerFunction() {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Please input your account");
+                System.out.println("Input UserName");
+                String userName = scanner.nextLine();
+                System.out.println("Input Password");
+                String password = scanner.nextLine();
+                System.out.println("Input name");
+                String name = scanner.nextLine();
+                System.out.println("Input age");
+                String age = scanner.nextLine();
+                //improve here...............................................
+                String regexString = "^[A-Za-z0-9]{4,8}$";
+                Pattern pattern = Pattern.compile(regexString);
+                Matcher matcher = pattern.matcher(userName);
+                if(!matcher.matches()){
+                        System.out.println("UserName must have 4 - 8 character with no special item");
+                        firstMenu();
+                }else{
+                        user = userManager.register(userName, password,name , age);
+                        if(user==null){
+                                System.out.println("u must have more than 18 to register this LoveHotel");
+                                firstMenu();
+                        }else System.out.println("Register success");
+
+                        commandControllerMenu.displayUserInfoCommand(this.user);
+
+                }
+
+        }
 }

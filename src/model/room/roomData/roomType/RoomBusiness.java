@@ -6,5 +6,6 @@ import model.room.roomData.Room;
 public class RoomBusiness extends Room {
     public RoomBusiness(int serial) {
         super(serial,EnumRoomType.business);
+        super.setPrice(20000);
     }
 }

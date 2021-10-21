@@ -6,6 +6,7 @@ public class Room implements IRoom, Serializable {
     int serial;
     private boolean ready = true;
     EnumRoomType type ;
+    private int price;
 
     public Room() {
     }
@@ -18,6 +19,14 @@ public class Room implements IRoom, Serializable {
 
     public Room(EnumRoomType type) {
         this.type = type;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getSerial() {
