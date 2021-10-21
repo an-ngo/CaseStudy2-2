@@ -105,14 +105,7 @@ public class Display {
                                 secondMenu();
                                 break;
                         case 7:
-                                ArrayList<Bill> billOfUser = billManager.getAllBillOfUser(user);
-                                if(billOfUser!=null){
-                                        System.out.println("All bill: ");
-                                        for (Bill bill :
-                                                billOfUser) {
-                                                System.out.println(bill);
-                                        }
-                                }else System.out.println("U have no Bill in this Hotel");
+                                displayAllBillByUser();
                                 secondMenu();
                                 break;
                         case 0:
@@ -123,6 +116,17 @@ public class Display {
                                 System.out.println("Wrong input");
                                 secondMenu();
                 }
+        }
+
+        private void displayAllBillByUser() {
+                ArrayList<Bill> billOfUser = billManager.getAllBillOfUser(user);
+                if(billOfUser!=null){
+                        System.out.println("All bill: ");
+                        for (Bill bill :
+                                billOfUser) {
+                                System.out.println(bill);
+                        }
+                }else System.out.println("U have no Bill in this Hotel");
         }
 
         private void ChooseAndCheckoutRoomByUser() {
