@@ -1,6 +1,6 @@
-package controller.adminManager;
+package controller.adminManager_NotUserYet;
 
-import model.hotel.admin.Admin;
+import model.hotel.admin_NotUseYet.Admin;
 
 import java.util.ArrayList;
 

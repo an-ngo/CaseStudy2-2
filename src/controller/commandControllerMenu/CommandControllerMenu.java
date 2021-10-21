@@ -15,11 +15,11 @@ import model.user.commandUser.ICommandUser;
 import model.user.user.User;
 import view.display.Display;
 
-public class CommandMenu {
+public class CommandControllerMenu {
     private UserManager userManager ;
     private HotelManager hotelManager ;
 
-    public CommandMenu(UserManager userManager, HotelManager hotelManager) {
+    public CommandControllerMenu(UserManager userManager, HotelManager hotelManager) {
         this.userManager = userManager;
         this.hotelManager = hotelManager;
     }

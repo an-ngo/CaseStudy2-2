@@ -1,4 +1,4 @@
-package model.hotel.admin;
+package model.hotel.admin_NotUseYet;
 
 import model.hotel.hotelData.Hotel;
 import model.room.roomData.Room;

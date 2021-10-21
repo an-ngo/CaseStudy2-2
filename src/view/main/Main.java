@@ -53,7 +53,7 @@ public class Main {
 
         //body project
         Display display = new Display(hotelManager, userManager,billManager);
-        display.displayMenu();
+        display.firstMenu();
 
         //Function before end Project/Menu
         try {

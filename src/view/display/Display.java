@@ -1,11 +1,12 @@
 package view.display;
 import controller.billManager.BillManager;
-import controller.commandControllerMenu.CommandMenu;
+import controller.commandControllerMenu.CommandControllerMenu;
 import controller.hotelManager.HotelManager;
 import controller.userManager.UserManager;
 import model.hotel.hotelData.Hotel;
 import model.room.roomData.Room;
 import model.user.user.User;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +19,7 @@ public class Display {
         //public Display display;
         public Hotel hotel ;
         public User user = new User();
-        CommandMenu commandMenu = new CommandMenu(userManager,hotelManager);
+        CommandControllerMenu commandControllerMenu = new CommandControllerMenu(userManager,hotelManager);
 
 
 
@@ -63,46 +64,49 @@ public class Display {
                 Matcher matcher = pattern.matcher(userName);
                 if(!matcher.matches()){
                         System.out.println("UserName must have 4 - 8 character with no special item");
-                        displayMenu();
+                        firstMenu();
                 }else{
-                        this.user = userManager.register(userName, password,name , age);
-                        if(this.user==null){
+                        user = userManager.register(userName, password,name , age);
+                        if(user==null){
                                 System.out.println("u must have more than 18 to register this LoveHotel");
-                                displayMenu();
+                                firstMenu();
                         }else System.out.println("Register success");
 
-                        commandMenu.displayUserInfoCommand(this.user);
+                        commandControllerMenu.displayUserInfoCommand(this.user);
 
                 }
 
         }
 
-        public void displayMenu() {
+        public void firstMenu() {
                 System.out.println("Input your choice");
                 System.out.println("1: Login");
                 System.out.println("2: Register");
                 System.out.println("3: Quit");
+//                Menu1.displayMenu1();
                 Scanner scanner = new Scanner(System.in);
                 int input = scanner.nextInt();
                 switch (input){
                         case 1:
                                 this.loginFunction();
-                                displaySecondMenu();
+                                secondMenu();
                                 break;
                         case 2:
                                 this.registerFunction();
-                                displaySecondMenu();
+                                secondMenu();
                                 break;
                         case 3:
                                 System.out.println("Logout.......");
                                 break;
                         default:
                                 System.out.println("Wrong input");
-                                displayMenu();
+                                firstMenu();
                 }
         }
 
-        public void displaySecondMenu() {
+        public void secondMenu() {
+
+                System.out.println("-----------------------------------");
                 System.out.println("Input your choice");
                 System.out.println("1: Show all Room");
                 System.out.println("2: view Hotel info");
@@ -111,31 +115,24 @@ public class Display {
                 System.out.println("5: Check out Room / return Room");
                 System.out.println("6: Show ur information");
                 System.out.println("7: Back to previous");
-
+//                Menu2.displayMenu2();
                 Scanner scanner = new Scanner(System.in);
                 int input = scanner.nextInt();
                 switch (input){
                         case 1:
-                                System.out.println("-----------------------------------");
-                                commandMenu.displayAllRoomCommand(this.hotel);
-                                System.out.println("-----------------------------------");
-                                displaySecondMenu();
+                                commandControllerMenu.displayAllRoomCommand(this.hotel);
+                                secondMenu();
                                 break;
                         case 2:
-                                System.out.println("-----------------------------------");
-                                commandMenu.displayHotelInfoCommand(this.hotel);
-                                System.out.println("-----------------------------------");
-                                displaySecondMenu();
+                                commandControllerMenu.displayHotelInfoCommand(this.hotel);
+                                secondMenu();
                                 break;
                         case 3:
-                                System.out.println("-----------------------------------");
-                                commandMenu.displayAllUserRoomCommand(this.user);
-                                System.out.println("-----------------------------------");
-                                displaySecondMenu();
+                                commandControllerMenu.displayAllUserRoomCommand(this.user);
+                                secondMenu();
                                 break;
                         case 4:
-                                System.out.println("-----------------------------------");
-                                commandMenu.displayAllRoomCommand(this.hotel);
+                                commandControllerMenu.displayAllRoomCommand(this.hotel);
                                 System.out.println("Input Room's serial to book");
                                 Scanner scanner2 = new Scanner(System.in);
                                 int serial = scanner2.nextInt();
@@ -147,12 +144,10 @@ public class Display {
                                 }else{
                                         System.out.println("Input wrong serial");
                                 }
-                                System.out.println("-----------------------------------");
-                                displaySecondMenu();
+                                secondMenu();
                                 break;
                         case 5:
-                                System.out.println("-----------------------------------");
-                                commandMenu.displayAllUserRoomCommand(this.user);
+                                commandControllerMenu.displayAllUserRoomCommand(this.user);
                                 System.out.println("Input Room's serial to remove");
                                 Scanner scanner1 = new Scanner(System.in);
                                 int serial2 = scanner1.nextInt();
@@ -163,27 +158,21 @@ public class Display {
                                 }else{
                                         System.out.println("Input wrong serial");
                                 }
-                                System.out.println("-----------------------------------");
-                                displaySecondMenu();
+                                secondMenu();
                                 break;
 
                         case 6:
-                                System.out.println("-----------------------------------");
-                                commandMenu.displayUserInfoCommand(this.user);
-                                System.out.println("-----------------------------------");
-                                displaySecondMenu();
+                                commandControllerMenu.displayUserInfoCommand(this.user);
+                                secondMenu();
                                 break;
 
                         case 7:
-                                System.out.println("-----------------------------------");
-                                System.out.println("Back to 1st menu");
-                                displayMenu();
+                                System.out.println("Back to 1st menu.....");
+                                firstMenu();
                                 break;
                         default:
-                                System.out.println("-----------------------------------");
                                 System.out.println("Wrong input");
-                                System.out.println("-----------------------------------");
-                                displaySecondMenu();
+                                secondMenu();
                 }
         }
 
