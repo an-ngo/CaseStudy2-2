@@ -36,6 +36,7 @@ public class Display {
 
 
         public void firstMenu() {
+                System.out.println("-----------------------------------");
                 System.out.println("Input your choice");
                 System.out.println("1: Login");
                 System.out.println("2: Register");
