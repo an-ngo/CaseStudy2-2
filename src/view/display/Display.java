@@ -35,7 +35,7 @@ public class Display {
 
 
 
-        public void firstMenu() {
+        public void displayFirstMenu() {
                 System.out.println("-----------------------------------");
                 System.out.println("Input your choice");
                 System.out.println("1: Login");
@@ -47,22 +47,22 @@ public class Display {
                 switch (input){
                         case 1:
                                 this.loginFunction();
-                                secondMenu();
+                                displaySecondMenu();
                                 break;
                         case 2:
                                 this.registerFunction();
-                                secondMenu();
+                                displaySecondMenu();
                                 break;
                         case 0:
                                 System.out.println("Logout.......");
                                 break;
                         default:
                                 System.out.println("Wrong input");
-                                firstMenu();
+                                displayFirstMenu();
                 }
         }
 
-        public void secondMenu() {
+        public void displaySecondMenu() {
 
                 System.out.println("-----------------------------------");
                 System.out.println("Input your choice");
@@ -80,46 +80,46 @@ public class Display {
                 switch (input){
                         case 1:
                                 commandControllerMenu.displayAllRoomCommand(this.hotel);
-                                secondMenu();
+                                displaySecondMenu();
                                 break;
                         case 2:
                                 commandControllerMenu.displayHotelInfoCommand(this.hotel);
-                                secondMenu();
+                                displaySecondMenu();
                                 break;
                         case 3:
                                 commandControllerMenu.displayAllUserRoomCommand(this.user);
-                                secondMenu();
+                                displaySecondMenu();
                                 break;
                         case 4:
                                 commandControllerMenu.displayAllRoomCommand(this.hotel);
                                 chooseAndBookRoomByUser();
-                                secondMenu();
+                                displaySecondMenu();
                                 break;
                         case 5:
                                 commandControllerMenu.displayAllUserRoomCommand(this.user);
                                 ChooseAndCheckoutRoomByUser();
-                                secondMenu();
+                                displaySecondMenu();
                                 break;
 
                         case 6:
                                 commandControllerMenu.displayUserInfoCommand(this.user);
-                                secondMenu();
+                                displaySecondMenu();
                                 break;
                         case 7:
-                                displayAllBillByUser();
-                                secondMenu();
+                                displayAllBillOfUser();
+                                displaySecondMenu();
                                 break;
                         case 0:
                                 System.out.println("Back to 1st menu.....");
-                                firstMenu();
+                                displayFirstMenu();
                                 break;
                         default:
                                 System.out.println("Wrong input");
-                                secondMenu();
+                                displaySecondMenu();
                 }
         }
 
-        private void displayAllBillByUser() {
+        private void displayAllBillOfUser() {
                 ArrayList<Bill> billOfUser = billManager.getAllBillOfUser(user);
                 if(billOfUser!=null){
                         System.out.println("All bill: ");
@@ -198,12 +198,12 @@ public class Display {
                 Matcher matcher = pattern.matcher(userName);
                 if(!matcher.matches()){
                         System.out.println("UserName must have 4 - 12 character with no special item");
-                        firstMenu();
+                        displayFirstMenu();
                 }else{
                         user = userManager.register(userName, password,name , age);
                         if(user==null){
                                 System.out.println("Same username with another account");
-                                firstMenu();
+                                displayFirstMenu();
                         }else System.out.println("Register success");
 
                         commandControllerMenu.displayUserInfoCommand(this.user);
