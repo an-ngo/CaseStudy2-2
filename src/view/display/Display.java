@@ -54,7 +54,7 @@ public class Display {
                                 displaySecondMenu();
                                 break;
                         case 0:
-                                System.out.println("Logout.......");
+                                System.out.println("Quitting........");
                                 break;
                         default:
                                 System.out.println("Wrong input");
@@ -73,7 +73,8 @@ public class Display {
                 System.out.println("5: Check out Room / return Room");
                 System.out.println("6: Show ur information");
                 System.out.println("7: Show all your Bill");
-                System.out.println("0: Back to previous");
+                System.out.println("8: Show the most Booked Room");
+                System.out.println("0: Log out");
 //                Menu2.displayMenu2();
                 Scanner scanner = new Scanner(System.in);
                 int input = scanner.nextInt();
@@ -109,8 +110,12 @@ public class Display {
                                 displayAllBillOfUser();
                                 displaySecondMenu();
                                 break;
+                        case 8:
+                                displayBestBookedRoom();
+                                displaySecondMenu();
+                                break;
                         case 0:
-                                System.out.println("Back to 1st menu.....");
+                                System.out.println("Log out.....");
                                 displayFirstMenu();
                                 break;
                         default:
@@ -210,5 +215,26 @@ public class Display {
 
                 }
 
+        }
+
+        public void displayBestBookedRoom(){
+                int max = -1;
+                ArrayList<Room> bestBookedRoom = new ArrayList<>();
+                for (Room room :
+                        hotel.getRoomArrayList()) {
+                        if(room.getNumberTimeBooked()>max){
+                                max = room.getNumberTimeBooked();
+                                bestBookedRoom = new ArrayList<>();
+                                bestBookedRoom.add(room);
+
+                        }else if(room.getNumberTimeBooked()==max){
+                                bestBookedRoom.add(room);
+                        }
+                }
+                for (Room room :
+                        bestBookedRoom) {
+                        System.out.println(room+" timeBookedRoom: "+room.getNumberTimeBooked());
+
+                }
         }
 }

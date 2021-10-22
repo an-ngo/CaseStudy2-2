@@ -10,6 +10,7 @@ public class Room implements IRoom, Serializable {
     private int price;
     private LocalDate startBook;
     private LocalDate endBook;
+    private int numberTimeBooked;
 
     public Room() {
     }
@@ -70,6 +71,14 @@ public class Room implements IRoom, Serializable {
 
     public void setReady(boolean ready) {
         this.ready = ready;
+    }
+
+    public int getNumberTimeBooked() {
+        return numberTimeBooked;
+    }
+
+    public void increaseNumberTimeBooked() {
+        this.numberTimeBooked++;
     }
 
     @Override

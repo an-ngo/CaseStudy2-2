@@ -113,6 +113,7 @@ public class User implements IUser, Serializable {
 
     public void bookRoomByUser(Room room){
         roomArrayList.add(room) ;
+        room.increaseNumberTimeBooked();
     }
     public void checkoutRoomByUser(Room room){
         roomArrayList.remove(room);
